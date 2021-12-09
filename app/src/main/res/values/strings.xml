@@ -2,10 +2,13 @@
     <string name="app_name">Task Manager</string>
 
 
+    <string name="txt_forgotPassword_title">Recuperar Contraseña</string>
     <string name="txt_login_title">Iniciar Sesión</string>
     <string name="txt_signUp_title">Registro</string>
     <string name="txt_task_title">Tarea</string>
     <string name="txt_tasks_title">Tareas</string>
+
+    <string name="txt_forgotPassword_link">¿Olvidaste la contraseña?</string>
 
     <string name="txt_hint_email">Correo electrónico</string>
     <string name="txt_hint_passw">Contraseña</string>
