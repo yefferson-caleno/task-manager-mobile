@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".LoginActivity">
+    tools:context=".TaskActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="@android:dimen/notification_large_icon_height"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginBottom="@android:dimen/notification_large_icon_height"
+        android:layout_marginBottom="32dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,13 +29,12 @@
             android:layout_weight="2" />
 
         <TextView
-            android:id="@+id/txtLoginTitle"
+            android:id="@+id/txtTitleTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:fontFamily="@font/share_tech"
             android:gravity="center"
-            android:text="@string/txt_login_title"
+            android:text="@string/txt_task_title"
             android:textColor="@color/txt_color"
             android:textSize="@dimen/txt_size_title"
             android:textStyle="bold|italic" />
@@ -46,27 +45,24 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/txtLabelEmail"
+            android:id="@+id/txtLabelTitleTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/share_tech"
-            android:text="@string/txt_hint_email"
+            android:text="@string/txt_hint_title"
             android:textColor="@color/txt_color"
             android:textSize="@dimen/txt_size_info" />
 
         <EditText
-            android:id="@+id/editTextEmailAddressLogin"
+            android:id="@+id/editTextTitleTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ems="10"
             android:fontFamily="@font/share_tech"
-            android:hint="@string/txt_hint_email"
-            android:inputType="textEmailAddress"
+            android:hint="@string/txt_hint_title"
+            android:inputType="textPersonName"
             android:textColor="@color/black"
-            android:textColorHighlight="#2196F3"
-            android:textColorHint="@color/txt_hint_color"
-            android:textColorLink="#2196F3" />
+            android:textColorHint="@color/txt_hint_color" />
 
         <Space
             android:layout_width="match_parent"
@@ -74,45 +70,64 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/txtLabelPassword"
+            android:id="@+id/textLabelStateTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/share_tech"
-            android:text="@string/txt_hint_passw"
+            android:text="@string/txt_hint_state"
             android:textColor="@color/txt_color"
             android:textSize="@dimen/txt_size_info" />
 
-        <EditText
-            android:id="@+id/editTextPassword"
+        <Spinner
+            android:id="@+id/spinnerStateTask"
+            style="@android:style/Widget.Spinner.DropDown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:fontFamily="@font/share_tech"
-            android:hint="@string/txt_hint_passw"
-            android:inputType="textPassword"
-            android:textColor="@color/black"
-            android:textColorHighlight="#2196F3"
-            android:textColorHint="@color/txt_hint_color"
-            android:textColorLink="#2196F3" />
+            android:entries="@array/state_array"
+            android:popupBackground="@color/black"
+            android:prompt="@string/state_prompt"
+            tools:visibility="visible" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2" />
+            android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/txtForgotPass"
+            android:id="@+id/txtLabelDescriptionTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:fontFamily="@font/share_tech"
-            android:gravity="center"
-            android:onClick="goToForgotPassword"
-            android:text="¿Olvidaste tu contraseña?"
-            android:textAllCaps="true"
+            android:text="@string/txt_hint_descr"
             android:textColor="@color/txt_color"
-            android:textSize="@dimen/txt_size_info"
+            android:textSize="@dimen/txt_size_info" />
+
+        <EditText
+            android:id="@+id/editTextDescriptionTask"
+            android:layout_width="match_parent"
+            android:layout_height="189dp"
+            android:ems="10"
+            android:fontFamily="@font/share_tech"
+            android:gravity="top"
+            android:hint="@string/txt_hint_descr"
+            android:inputType="textMultiLine"
+            android:textColor="@color/black"
+            android:textColorHint="@color/txt_hint_color" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnSaveTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/btn_bg_color"
+            android:fontFamily="@font/share_tech"
+            android:text="@string/btn_save"
+            android:textColor="@color/txt_color"
+            android:textSize="@dimen/txt_size_btn"
             android:textStyle="bold|italic" />
 
         <Space
@@ -120,44 +135,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="2" />
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/btn_bg_color"
-            android:fontFamily="@font/share_tech"
-            android:text="@string/btn_login"
-            android:textColor="@color/txt_color"
-            android:textSize="@dimen/txt_size_btn"
-            android:textStyle="bold|italic"
-            app:backgroundTint="@color/btn_bg_color"
-            app:cornerRadius="38dp"
-            app:strokeColor="@color/black"
-            app:strokeWidth="20dp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2" />
-
-        <Button
-            android:id="@+id/btnSignUp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:background="@color/btn_bg_color"
-            android:fontFamily="@font/share_tech"
-            android:onClick="goToSignUp"
-            android:text="@string/btn_signUp"
-            android:textColor="@color/txt_color"
-            android:textSize="@dimen/txt_size_btn"
-            android:textStyle="bold|italic"
-            app:backgroundTint="@color/btn_bg_color" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
