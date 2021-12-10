@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".TaskActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+        <TextView
+            android:id="@+id/txtTitleTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/share_tech"
+            android:gravity="center"
+            android:text="@string/txt_task_title"
+            android:textColor="@color/txt_color"
+            android:textSize="@dimen/txt_size_title"
+            android:textStyle="bold|italic" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/txtLabelTitleTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/share_tech"
+            android:text="@string/txt_hint_title"
+            android:textColor="@color/txt_color"
+            android:textSize="@dimen/txt_size_info" />
+
+        <EditText
+            android:id="@+id/editTextTitleTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:fontFamily="@font/share_tech"
+            android:hint="@string/txt_hint_title"
+            android:inputType="textPersonName"
+            android:textColor="@color/black"
+            android:textColorHint="@color/txt_hint_color" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/textLabelStateTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/share_tech"
+            android:text="@string/txt_hint_state"
+            android:textColor="@color/txt_color"
+            android:textSize="@dimen/txt_size_info" />
+
+        <Spinner
+            android:id="@+id/spinnerStateTask"
+            style="@android:style/Widget.Spinner.DropDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/state_array"
+            android:popupBackground="@color/black"
+            android:prompt="@string/state_prompt"
+            tools:visibility="visible" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/txtLabelDescriptionTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/share_tech"
+            android:text="@string/txt_hint_descr"
+            android:textColor="@color/txt_color"
+            android:textSize="@dimen/txt_size_info" />
+
+        <EditText
+            android:id="@+id/editTextDescriptionTask"
+            android:layout_width="match_parent"
+            android:layout_height="189dp"
+            android:ems="10"
+            android:fontFamily="@font/share_tech"
+            android:gravity="top"
+            android:hint="@string/txt_hint_descr"
+            android:inputType="textMultiLine"
+            android:textColor="@color/black"
+            android:textColorHint="@color/txt_hint_color" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnSaveTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/btn_bg_color"
+            android:fontFamily="@font/share_tech"
+            android:text="@string/btn_save"
+            android:textColor="@color/txt_color"
+            android:textSize="@dimen/txt_size_btn"
+            android:textStyle="bold|italic" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
