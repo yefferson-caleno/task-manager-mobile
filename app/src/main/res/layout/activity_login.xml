@@ -113,7 +113,8 @@
             android:textAllCaps="true"
             android:textColor="@color/txt_color"
             android:textSize="@dimen/txt_size_info"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold|italic"
+            android:visibility="invisible" />
 
         <Space
             android:layout_width="match_parent"

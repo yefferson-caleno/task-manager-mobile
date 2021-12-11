@@ -27,8 +27,18 @@
     <string name="btn_save">Guardar</string>
     <string name="btn_send">Enviar</string>
     <string name="btn_update">Actualizar</string>
+    <string name="btn_createTask">+ Crear Tarea</string>
 
     <string name="state_prompt">Selecciona un estado</string>
+
+    <!-- state colors -->
+    <string name="new_color">#656565</string>
+    <string name="active_color">#0000FF</string>
+    <string name="impediment_color">#FF9800</string>
+    <string name="closed_color">#00FF00</string>
+    <string name="warning_color">#FF0000</string>
+    <string name="view_color">#E62077</string>
+    <!-- //////////// -->
 
     <string-array name="state_array">
         <item>@string/state_prompt</item>
