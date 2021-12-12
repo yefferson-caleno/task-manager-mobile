@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "290629776696",
+    "project_id": "task-manager-75503",
+    "storage_bucket": "task-manager-75503.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290629776696:android:0d12e795be81e6669d3dcd",
+        "android_client_info": {
+          "package_name": "com.yeffersoncaleno.taskmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "290629776696-3a6jrb093jh5qhtsf0j4ul21c7bkmqn0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb32u4T-NzxWzXQK_ISN7AsILfjAt1tj4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "290629776696-3a6jrb093jh5qhtsf0j4ul21c7bkmqn0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
