@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -19,6 +21,7 @@ public class TasksActivity extends AppCompatActivity {
 
     List<TaskCardActivity> cardActivities;
     private FirebaseAuth mAuth;
+    private Button btnLogoutAlert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +29,16 @@ public class TasksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tasks);
 
         mAuth = FirebaseAuth.getInstance();
+        btnLogoutAlert = findViewById(R.id.btnLogout);
 
         init();
+
+        btnLogoutAlert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutConfirm();
+            }
+        });
     }
 
     public void init() {
@@ -52,21 +63,30 @@ public class TasksActivity extends AppCompatActivity {
         startActivity(new Intent(this, TaskActivity.class));
     }
 
-    public void logout(View view) {
+    private void logoutConfirm() {
         AlertDialog.Builder alert = new AlertDialog.Builder(TasksActivity.this);
         alert.setTitle("Cerrar Sesión").setMessage("¿Deseas salir de la aplicaci\u00f3n?")
-                .setCancelable(false).setPositiveButton("Si",
-                new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mAuth.signOut();
-                startActivity(new Intent(TasksActivity.this, LoginActivity.class));
-            }
-        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+                .setCancelable(false)
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mAuth.signOut();
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        alert.create();
+        alert.show();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == event.KEYCODE_BACK) {logoutConfirm();}
+        return super.onKeyDown(keyCode, event);
     }
 }

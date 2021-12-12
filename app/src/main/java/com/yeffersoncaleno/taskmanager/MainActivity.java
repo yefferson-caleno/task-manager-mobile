@@ -2,8 +2,12 @@ package com.yeffersoncaleno.taskmanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -19,11 +23,28 @@ public class MainActivity extends AppCompatActivity {
         goToApp();
     }
 
+    private Boolean onlineVerify() {
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager != null) {
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            if(networkInfo != null) {
+                return networkInfo.isConnected();
+            }
+        }
+        return false;
+    }
+
     private void goToApp() {
-        if(mAuth.getCurrentUser()!=null) {
-            startActivity(new Intent(this, TaskActivity.class));
+        if(onlineVerify().booleanValue()) {
+            if(mAuth.getCurrentUser()!=null) {
+                startActivity(new Intent(this, TasksActivity.class));
+            } else {
+                startActivity(new Intent(this, LoginActivity.class));
+            }
         } else {
-            startActivity(new Intent(this, LoginActivity.class));
+            Toast.makeText(getApplicationContext(), "No tienes conexión a internet.",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 }
