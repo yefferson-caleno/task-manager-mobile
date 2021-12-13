@@ -134,7 +134,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void userRegister() {
         User user = new User();
-        user.setUid(UUID.randomUUID().toString());
+        user.setUid(mAuth.getCurrentUser().getUid());
         user.setUserName(name.getText().toString());
         user.setUserEmail(email.getText().toString());
         user.setUserCreated(new Date());

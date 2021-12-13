@@ -37,7 +37,6 @@ public class TaskActivity extends AppCompatActivity {
 
     private EditText title;
     private EditText description;
-    private String userCreatedId;
     private Spinner spinner;
     private Button btnSaveTask;
     private List<State> states;
@@ -63,7 +62,6 @@ public class TaskActivity extends AppCompatActivity {
 
         initFirebase();
         getAllStates();
-        findUserId();
 
         btnSaveTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,32 +182,12 @@ public class TaskActivity extends AppCompatActivity {
         task.setTaskTitle(title.getText().toString());
         task.setStateId(findStateIdByDescription(spinner.getSelectedItem().toString()));
         task.setTaskDescription(description.getText().toString());
-        task.setUserCreatedId(userCreatedId);
+        task.setUserCreatedId(mAuth.getCurrentUser().getUid());
         task.setTaskInit(new Date());
         task.setTaskEnd(new Date());
         task.setTaskCreated(new Date());
         task.setTaskUpdated(new Date());
         reference.child(getString(R.string.task_collection)).child(task.getUid()).setValue(task);
-    }
-
-    private void findUserId() {
-        reference.child(getString(R.string.user_collection)).addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                            User user = dataSnapshot.getValue(User.class);
-                            if(user.getUserEmail().equals(mAuth.getCurrentUser().getEmail())) {
-                                userCreatedId = user.getUid();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
     }
 
     private String findStateIdByDescription(String description) {
