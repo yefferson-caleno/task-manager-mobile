@@ -1,5 +1,6 @@
 package com.yeffersoncaleno.taskmanager;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,18 +11,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.yeffersoncaleno.taskmanager.models.State;
+import com.yeffersoncaleno.taskmanager.models.Task;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class TasksActivity extends AppCompatActivity {
 
     List<TaskCardActivity> cardActivities;
     private FirebaseAuth mAuth;
     private Button btnLogoutAlert;
+    private FirebaseDatabase database;
+    private DatabaseReference reference;
+    private List<State> states;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +46,12 @@ public class TasksActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         btnLogoutAlert = findViewById(R.id.btnLogout);
 
-        init();
+        states = new ArrayList<>();
+        cardActivities = new ArrayList<>();
+
+        initFirebase();
+        getAllStates();
+        getAllTask();
 
         btnLogoutAlert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,23 +61,59 @@ public class TasksActivity extends AppCompatActivity {
         });
     }
 
-    public void init() {
-        cardActivities = new ArrayList<>();
-        cardActivities.add(new TaskCardActivity("Diseñar DB.", "Nueva"));
-        cardActivities.add(new TaskCardActivity("Mockup Frontend.", "Activa"));
-        cardActivities.add(new TaskCardActivity("Maquetar Frontend", "Impedimento"));
-        cardActivities.add(new TaskCardActivity("Diseñar Backend.", "Cerrada"));
-        cardActivities.add(new TaskCardActivity("Crear Backend.", "Nueva"));
-        cardActivities.add(new TaskCardActivity("Conectar Front-Back.", "Impedimento"));
-        cardActivities.add(new TaskCardActivity("Realizar pruebas.", "Cerrada"));
-        cardActivities.add(new TaskCardActivity("Ajustes finales", "Activa"));
-
-        TaskCardAdapter taskCardAdapter = new TaskCardAdapter(cardActivities, this);
-        RecyclerView recyclerView = findViewById(R.id.reciclerViewTask);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(taskCardAdapter);
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference();
     }
+
+    private void getAllStates() {
+        reference.child(getString(R.string.state_collection)).addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        states.clear();
+                        for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                            State state = dataSnapshot.getValue(State.class);
+                            states.add(state);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    public void getAllTask() {
+        reference.child(getString(R.string.task_collection)).addValueEventListener(
+                new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                cardActivities.clear();
+                for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    Task task = dataSnapshot.getValue(Task.class);
+                    if(task.getUserCreatedId().equals(mAuth.getCurrentUser().getUid())) {
+                        cardActivities.add(new TaskCardActivity(task.getTaskTitle(),
+                                findStateDescriptionById(task.getStateId())));
+                    }
+                }
+                TaskCardAdapter taskCardAdapter = new TaskCardAdapter(cardActivities,
+                        TasksActivity.this);
+                RecyclerView recyclerView = findViewById(R.id.reciclerViewTask);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(TasksActivity.this));
+                recyclerView.setAdapter(taskCardAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
 
     public void goToTask(View view) {
         startActivity(new Intent(this, TaskActivity.class));
@@ -88,5 +144,15 @@ public class TasksActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == event.KEYCODE_BACK) {logoutConfirm();}
         return super.onKeyDown(keyCode, event);
+    }
+
+    private String findStateDescriptionById(String uid) {
+        String res = "";
+        for(State state: states) {
+            if(state.getUid().equals(uid)) {
+                res = state.getStateDescription();
+            }
+        }
+        return res;
     }
 }
