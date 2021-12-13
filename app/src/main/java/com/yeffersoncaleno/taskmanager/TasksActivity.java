@@ -12,16 +12,24 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.yeffersoncaleno.taskmanager.models.State;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class TasksActivity extends AppCompatActivity {
 
     List<TaskCardActivity> cardActivities;
     private FirebaseAuth mAuth;
     private Button btnLogoutAlert;
+    private FirebaseDatabase database;
+    private DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +39,7 @@ public class TasksActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         btnLogoutAlert = findViewById(R.id.btnLogout);
 
+        initFirebase();
         init();
 
         btnLogoutAlert.setOnClickListener(new View.OnClickListener() {
@@ -39,6 +48,12 @@ public class TasksActivity extends AppCompatActivity {
                 logoutConfirm();
             }
         });
+    }
+
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference();
     }
 
     public void init() {

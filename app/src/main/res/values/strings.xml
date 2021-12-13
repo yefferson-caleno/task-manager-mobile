@@ -29,6 +29,8 @@
     <string name="btn_update">Actualizar</string>
     <string name="btn_createTask">+ Crear Tarea</string>
 
+    <string name="empty_field">Campo requerido</string>
+
     <string name="state_prompt">Selecciona un estado</string>
 
     <!-- state colors -->
@@ -40,11 +42,8 @@
     <string name="view_color">#E62077</string>
     <!-- //////////// -->
 
-    <string-array name="state_array">
-        <item>@string/state_prompt</item>
-        <item>Nueva</item>
-        <item>Activa</item>
-        <item>Impedimento</item>
-        <item>Cerrada</item>
-    </string-array>
+    <string name="user_collection">dy_user</string>
+    <string name="state_collection">st_state</string>
+    <string name="task_collection">dy_task</string>
+
 </resources>
