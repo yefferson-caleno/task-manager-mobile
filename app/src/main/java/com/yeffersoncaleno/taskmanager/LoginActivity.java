@@ -53,29 +53,44 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signIn(View view) {
-        mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(getApplicationContext(),
-                                    "Usuario validado exitosamente.",
-                                    Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),
-                                    TasksActivity.class));// updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(getApplicationContext(),
-                                    "Inicio de sesión fallido.",
-                                    Toast.LENGTH_SHORT).show();
-                            // updateUI(null);
-                        }
+        if(!isEmptyFields()) {
+            mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                Toast.makeText(getApplicationContext(),
+                                        "Usuario validado exitosamente.",
+                                        Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(),
+                                        TasksActivity.class));// updateUI(user);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(getApplicationContext(),
+                                        "Inicio de sesión fallido.",
+                                        Toast.LENGTH_SHORT).show();
+                                // updateUI(null);
+                            }
 
-                        // ...
-                    }
-                });
+                            // ...
+                        }
+                    });
+        }
+    }
+
+    private Boolean isEmptyFields() {
+        Boolean res = false;
+        if(email.getText().toString().equals("")) {
+            res = true;
+            email.setError(getString(R.string.empty_field));
+        }
+        if(password.getText().toString().equals("")) {
+            res = true;
+            password.setError(getString(R.string.empty_field));
+        }
+        return res;
     }
 
     @Override
