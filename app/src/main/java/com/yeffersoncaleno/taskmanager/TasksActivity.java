@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +31,7 @@ public class TasksActivity extends AppCompatActivity {
 
     List<TaskCardActivity> cardActivities;
     private FirebaseAuth mAuth;
+    private TextView waitTasks;
     private Button btnLogoutAlert;
     private FirebaseDatabase database;
     private DatabaseReference reference;
@@ -42,6 +44,7 @@ public class TasksActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         btnLogoutAlert = findViewById(R.id.btnLogout);
+        waitTasks = findViewById(R.id.textViewInfoTask);
 
         states = new ArrayList<>();
         cardActivities = new ArrayList<>();
@@ -94,6 +97,11 @@ public class TasksActivity extends AppCompatActivity {
                         cardActivities.add(new TaskCardActivity(task.getUid(), task.getTaskTitle(),
                                 findStateDescriptionById(task.getStateId())));
                     }
+                }
+                if(cardActivities.size()<=0) {
+                    waitTasks.setText("No tienes tareas registradas");
+                } else {
+                    waitTasks.setVisibility(View.GONE);
                 }
                 TaskCardAdapter taskCardAdapter = new TaskCardAdapter(cardActivities,
                         TasksActivity.this);

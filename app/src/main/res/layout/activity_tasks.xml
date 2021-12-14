@@ -60,6 +60,19 @@
             android:textSize="@dimen/txt_size_title"
             android:textStyle="bold|italic" />
 
+        <TextView
+            android:id="@+id/textViewInfoTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/share_tech"
+            android:gravity="center"
+            android:text="Buscando tareas ..."
+            android:textColor="@color/txt_hint_color"
+            android:textSize="@dimen/txt_size_btn"
+            android:textStyle="italic" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reciclerViewTask"
             android:layout_width="match_parent"
