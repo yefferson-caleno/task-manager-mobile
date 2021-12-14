@@ -136,6 +136,18 @@
             android:textSize="@dimen/txt_size_btn"
             android:textStyle="bold|italic" />
 
+        <Button
+            android:id="@+id/btnUpdateTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/btn_bg_color"
+            android:fontFamily="@font/share_tech"
+            android:text="@string/btn_update"
+            android:textColor="@color/txt_color"
+            android:textSize="@dimen/txt_size_btn"
+            android:textStyle="bold|italic"
+            tools:visibility="gone" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

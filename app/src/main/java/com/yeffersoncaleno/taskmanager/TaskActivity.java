@@ -35,10 +35,12 @@ import java.util.UUID;
 
 public class TaskActivity extends AppCompatActivity {
 
+    private String uid;
     private EditText title;
     private EditText description;
     private Spinner spinner;
-    private Button btnSaveTask;
+    private Task taskUpdate;
+    private Button btnSaveTask, btnUpdateTask;
     private List<State> states;
     private List<String> stateDescriptions;
     private FirebaseDatabase database;
@@ -56,6 +58,7 @@ public class TaskActivity extends AppCompatActivity {
         description = findViewById(R.id.editTextDescriptionTask);
         spinner = findViewById(R.id.spinnerStateTask);
         btnSaveTask = findViewById(R.id.btnSaveTask);
+        btnUpdateTask = findViewById(R.id.btnUpdateTask);
         mAuth = FirebaseAuth.getInstance();
         states = new ArrayList<>();
         stateDescriptions = new ArrayList<>();
@@ -66,9 +69,28 @@ public class TaskActivity extends AppCompatActivity {
         btnSaveTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveTaskConfirm();
+                taskConfirm(getString(R.string.btn_save));
             }
         });
+        btnUpdateTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                taskConfirm(getString(R.string.btn_update));
+            }
+        });
+    }
+
+    private void inputDataVerify() {
+        Bundle inputData = getIntent().getExtras();
+        if(inputData != null) {
+            uid = inputData.getString("uid");
+            getTaskByUid(uid);
+            btnSaveTask.setVisibility(View.GONE);
+            btnUpdateTask.setVisibility(View.VISIBLE);
+        } else {
+            btnSaveTask.setVisibility(View.VISIBLE);
+            btnUpdateTask.setVisibility(View.GONE);
+        }
     }
 
     private void initFirebase() {
@@ -93,9 +115,28 @@ public class TaskActivity extends AppCompatActivity {
                     states.add(state);
                 }
                 orderByCreated(states);
+                inputDataVerify();
                 arrayAdapterState = new ArrayAdapter<>(TaskActivity.this,
                         android.R.layout.simple_spinner_dropdown_item, getDescriptionStates(states));
                 spinner.setAdapter(arrayAdapterState);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getTaskByUid(String uid) {
+        reference.child(getString(R.string.task_collection)).child(uid).addValueEventListener(
+                new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                taskUpdate = snapshot.getValue(Task.class);
+                title.setText(taskUpdate.getTaskTitle());
+                spinner.setSelection(indexOfStateId(taskUpdate.getStateId()));
+                description.setText(taskUpdate.getTaskDescription());
             }
 
             @Override
@@ -149,17 +190,21 @@ public class TaskActivity extends AppCompatActivity {
         description.setText("");
     }
 
-    private void saveTaskConfirm() {
+    private void taskConfirm(String type) {
         if(!isEmptyFields()) {
             AlertDialog.Builder alert = new AlertDialog.Builder(TaskActivity.this);
-            alert.setTitle("Guardar Tarea").setMessage("¿Estás seguro de guardar la Tarea?")
+            alert.setTitle(type+" Tarea").setMessage("¿Estás seguro de "+type+" la Tarea?")
                     .setCancelable(false)
                     .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            saveTask();
+                            if(type.equals(getString(R.string.btn_save))) {
+                                saveTask();
+                            } else {
+                                updateTask();
+                            }
                             Toast.makeText(getApplicationContext(),
-                                    "Tarea creada exitosamente.",
+                                    "Tarea "+type+" exitosamente.",
                                     Toast.LENGTH_SHORT).show();
                             clearFields();
                             startActivity(new Intent(getApplicationContext(), TasksActivity.class));
@@ -190,6 +235,24 @@ public class TaskActivity extends AppCompatActivity {
         reference.child(getString(R.string.task_collection)).child(task.getUid()).setValue(task);
     }
 
+    private void updateTask() {
+        Task task = new Task();
+        task.setUid(uid);
+        task.setTaskTitle(title.getText().toString());
+        task.setStateId(findStateIdByDescription(spinner.getSelectedItem().toString()));
+        task.setTaskDescription(description.getText().toString());
+        task.setUserCreatedId(mAuth.getCurrentUser().getUid());
+        task.setTaskInit(new Date());
+        if(spinner.getSelectedItem().toString().equals(getString(R.string.state_closed))) {
+            task.setTaskEnd(new Date());
+        } else {
+            task.setTaskEnd(taskUpdate.getTaskEnd());
+        }
+        task.setTaskCreated(taskUpdate.getTaskCreated());
+        task.setTaskUpdated(new Date());
+        reference.child(getString(R.string.task_collection)).child(task.getUid()).setValue(task);
+    }
+
     private String findStateIdByDescription(String description) {
         String uid = null;
         for(State state: states) {
@@ -198,5 +261,15 @@ public class TaskActivity extends AppCompatActivity {
             }
         }
         return uid;
+    }
+
+    private int indexOfStateId(String uid) {
+        int res = 0;
+        for(int i=0; i<states.size(); i++) {
+            if(states.get(i).getUid().equals(uid)) {
+                res = i;
+            }
+        }
+        return res+1;
     }
 }

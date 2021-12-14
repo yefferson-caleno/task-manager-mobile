@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.google.firebase.FirebaseApp;
@@ -25,9 +24,7 @@ import com.yeffersoncaleno.taskmanager.models.State;
 import com.yeffersoncaleno.taskmanager.models.Task;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class TasksActivity extends AppCompatActivity {
 
@@ -51,7 +48,6 @@ public class TasksActivity extends AppCompatActivity {
 
         initFirebase();
         getAllStates();
-        getAllTask();
 
         btnLogoutAlert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +73,7 @@ public class TasksActivity extends AppCompatActivity {
                             State state = dataSnapshot.getValue(State.class);
                             states.add(state);
                         }
+                        getAllTask();
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
@@ -94,7 +91,7 @@ public class TasksActivity extends AppCompatActivity {
                 for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Task task = dataSnapshot.getValue(Task.class);
                     if(task.getUserCreatedId().equals(mAuth.getCurrentUser().getUid())) {
-                        cardActivities.add(new TaskCardActivity(task.getTaskTitle(),
+                        cardActivities.add(new TaskCardActivity(task.getUid(), task.getTaskTitle(),
                                 findStateDescriptionById(task.getStateId())));
                     }
                 }

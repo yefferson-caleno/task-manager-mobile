@@ -32,6 +32,7 @@
     <string name="empty_field">Campo requerido</string>
 
     <string name="state_prompt">Selecciona un estado</string>
+    <string name="state_closed">Cerrada</string>
 
     <!-- state colors -->
     <string name="new_color">#656565</string>

@@ -1,11 +1,13 @@
 package com.yeffersoncaleno.taskmanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +37,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.ViewHo
     @Override
     public void onBindViewHolder(final TaskCardAdapter.ViewHolder holder, int position) {
         holder.bindData(taskCardData.get(position));
+        holder.setOnClickListeners();
     }
 
     @Override
@@ -42,12 +45,15 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.ViewHo
         return taskCardData.size();
     }
 
-    public  class  ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, state;
+    public  class  ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        Context context;
+        TextView uid, title, state;
         ImageView iconTaskCard, iconViewTaskCard, iconDeleteTaskCard;
 
         ViewHolder(View itemView) {
             super(itemView);
+            context = itemView.getContext();
+            uid = itemView.findViewById(R.id.txtUidCardTask);
             title = itemView.findViewById(R.id.txtTitleCardTask);
             state = itemView.findViewById(R.id.txtStateCardTask);
             iconTaskCard = itemView.findViewById(R.id.iconImageView);
@@ -56,6 +62,8 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.ViewHo
         }
 
         void bindData(final TaskCardActivity item) {
+            uid.setText(item.getUid());
+            uid.setVisibility(View.GONE);
             title.setText(item.getTitle());
             state.setText(item.getState());
             iconTaskCard.setColorFilter(Color.parseColor(goToColor(item.getState())),
@@ -64,6 +72,25 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.ViewHo
                     PorterDuff.Mode.SRC_IN);
             iconDeleteTaskCard.setColorFilter(Color.parseColor(
                     context.getString(R.string.warning_color)), PorterDuff.Mode.SRC_IN);
+        }
+
+        void setOnClickListeners() {
+            iconViewTaskCard.setOnClickListener(this);
+            iconDeleteTaskCard.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btnUpdateCardTask:
+                    Intent intent = new Intent(context, TaskActivity.class);
+                    intent.putExtra("uid", uid.getText().toString());
+                        context.startActivity(intent);
+                    break;
+                case R.id.btnDeleteCardTask:
+
+                    break;
+            }
         }
     }
 
