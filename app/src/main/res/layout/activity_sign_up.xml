@@ -145,7 +145,7 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/btnSaveTask"
+            android:id="@+id/btnSignUpSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/btn_bg_color"

@@ -46,5 +46,8 @@
     <string name="user_collection">dy_user</string>
     <string name="state_collection">st_state</string>
     <string name="task_collection">dy_task</string>
+    <string name="error_weak_password">La contraseña debe tener al menos 6 caracteres.</string>
+    <string name="error_invalid_email">El correo electrónico tiene un formato erróneo.</string>
+    <string name="error_user_exists">El correo electrónico ya está siendo utilizada por otra cuenta.</string>
 
 </resources>
