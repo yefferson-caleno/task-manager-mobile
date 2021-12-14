@@ -1,6 +1,7 @@
 package com.yeffersoncaleno.taskmanager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -10,8 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 import java.util.Locale;
@@ -21,6 +28,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.ViewHo
     private List<TaskCardActivity> taskCardData;
     private LayoutInflater inflater;
     private Context context;
+    private FirebaseDatabase database;
 
     public TaskCardAdapter(List<TaskCardActivity> taskCardList, Context context) {
         this.inflater = LayoutInflater.from(context);
@@ -88,7 +96,26 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.ViewHo
                         context.startActivity(intent);
                     break;
                 case R.id.btnDeleteCardTask:
-
+                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                    alert.setTitle("Eliminar Tarea").setMessage("¿Estás seguro de Eliminar la Tarea?")
+                            .setCancelable(false)
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    deleteTask(uid.getText().toString());
+                                    Toast.makeText(context,
+                                            "Tarea Eliminada exitosamente.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    alert.create();
+                    alert.show();
                     break;
             }
         }
@@ -111,5 +138,12 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.ViewHo
                 break;
         };
         return color;
+    }
+
+    private void deleteTask(String uid) {
+        FirebaseApp.initializeApp(context);
+        database = FirebaseDatabase.getInstance();
+        database.getReference().child(context.getString(R.string.task_collection)).child(uid)
+                .removeValue();
     }
 }
