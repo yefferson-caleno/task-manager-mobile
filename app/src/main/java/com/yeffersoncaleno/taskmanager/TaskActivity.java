@@ -169,17 +169,20 @@ public class TaskActivity extends AppCompatActivity {
         if(title.getText().toString().equals("")) {
             res = true;
             title.setError(getString(R.string.empty_field));
+            title.requestFocus();
         }
         System.out.println();
         if(spinner.getSelectedItem().toString().equals("") ||
                 spinner.getSelectedItem().toString().equals(getString(R.string.state_prompt))) {
             res = true;
             ((TextView)spinner.getSelectedView()).setError(getString(R.string.empty_field));
+            ((TextView)spinner.getSelectedView()).requestFocus();
         }
 
         if(description.getText().toString().equals("")) {
             res = true;
             description.setError(getString(R.string.empty_field));
+            description.requestFocus();
         }
         return res;
     }
