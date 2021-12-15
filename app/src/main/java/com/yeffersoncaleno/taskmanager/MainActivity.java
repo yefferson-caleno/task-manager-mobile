@@ -23,6 +23,11 @@ public class MainActivity extends AppCompatActivity {
         goToApp();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
+
     private Boolean onlineVerify() {
         ConnectivityManager connectivityManager = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
