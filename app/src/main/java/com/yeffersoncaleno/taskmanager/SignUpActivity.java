@@ -116,7 +116,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 System.out.println(e.getMessage());
                             }
                             Toast.makeText(getApplicationContext(),
-                                    "Regsitro de usuario fallido.",
+                                    "Registro de usuario fallido.",
                                     Toast.LENGTH_SHORT).show();
                             btnSignUp.setText(getString(R.string.btn_signUp));
                             btnSignUp.setEnabled(true);
