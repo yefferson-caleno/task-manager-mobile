@@ -60,6 +60,11 @@
             android:textSize="@dimen/txt_size_title"
             android:textStyle="bold|italic" />
 
+        <SearchView
+            android:id="@+id/searchTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/textViewInfoTask"
             android:layout_width="match_parent"

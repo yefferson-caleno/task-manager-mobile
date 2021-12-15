@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
@@ -27,15 +28,17 @@ import com.yeffersoncaleno.taskmanager.models.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TasksActivity extends AppCompatActivity {
+public class TasksActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     List<TaskCardActivity> cardActivities;
     private FirebaseAuth mAuth;
     private TextView waitTasks;
+    private SearchView searchTask;
     private Button btnLogoutAlert;
     private FirebaseDatabase database;
     private DatabaseReference reference;
     private List<State> states;
+    TaskCardAdapter taskCardAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class TasksActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         btnLogoutAlert = findViewById(R.id.btnLogout);
         waitTasks = findViewById(R.id.textViewInfoTask);
+        searchTask = findViewById(R.id.searchTask);
 
         states = new ArrayList<>();
         cardActivities = new ArrayList<>();
@@ -58,6 +62,8 @@ public class TasksActivity extends AppCompatActivity {
                 logoutConfirm();
             }
         });
+
+        searchTask.setOnQueryTextListener(this);
     }
 
     private void initFirebase() {
@@ -103,7 +109,7 @@ public class TasksActivity extends AppCompatActivity {
                 } else {
                     waitTasks.setVisibility(View.GONE);
                 }
-                TaskCardAdapter taskCardAdapter = new TaskCardAdapter(cardActivities,
+                taskCardAdapter = new TaskCardAdapter(cardActivities,
                         TasksActivity.this);
                 RecyclerView recyclerView = findViewById(R.id.reciclerViewTask);
                 recyclerView.setHasFixedSize(true);
@@ -151,6 +157,14 @@ public class TasksActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public void onBackPressed() {
+        System.out.println("-----> Back pressed!");
+        if (!searchTask.isIconified()) {
+            searchTask.setIconified(true);
+        }
+    }
+
     private String findStateDescriptionById(String uid) {
         String res = "";
         for(State state: states) {
@@ -159,5 +173,16 @@ public class TasksActivity extends AppCompatActivity {
             }
         }
         return res;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        taskCardAdapter.filterTask(newText);
+        return false;
     }
 }

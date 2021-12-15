@@ -20,12 +20,14 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.ViewHolder> {
 
     private List<TaskCardActivity> taskCardData;
+    private List<TaskCardActivity> taskCardDataRef;
     private LayoutInflater inflater;
     private Context context;
     private FirebaseDatabase database;
@@ -34,6 +36,8 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.ViewHo
         this.inflater = LayoutInflater.from(context);
         this.context = context;
         this.taskCardData = taskCardList;
+        this.taskCardDataRef = new ArrayList<>();
+        taskCardDataRef.addAll(taskCardList);
     }
 
     @Override
@@ -51,6 +55,21 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.ViewHo
     @Override
     public int getItemCount() {
         return taskCardData.size();
+    }
+
+    public void filterTask(String input) {
+        taskCardData.clear();
+        if(input.length() <= 0) {
+            taskCardData.addAll(taskCardDataRef);
+        } else {
+            for(TaskCardActivity task: taskCardDataRef) {
+                if(task.getTitle().toLowerCase().contains(input.toLowerCase()) ||
+                        task.getState().toLowerCase().contains(input.toLowerCase())) {
+                    taskCardData.add(task);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     public  class  ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
