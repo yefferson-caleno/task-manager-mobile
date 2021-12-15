@@ -3,7 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/YefferCali/AndroidStudioProjects/TaskManager/app/src/main/res/drawable/baseline_article_24.xml" value="0.3671875" />
+        <entry key="..\:/Users/YefferCali/AndroidStudioProjects/TaskManager/app/src/main/res/drawable/baseline_cached_24.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/YefferCali/AndroidStudioProjects/TaskManager/app/src/main/res/drawable/outline_arrow_back_24.xml" value="0.2109375" />
+        <entry key="..\:/Users/YefferCali/AndroidStudioProjects/TaskManager/app/src/main/res/drawable/outline_visibility_24.xml" value="0.3671875" />
+        <entry key="..\:/Users/YefferCali/AndroidStudioProjects/TaskManager/app/src/main/res/font/share_tech.xml" value="0.225" />
+        <entry key="..\:/Users/YefferCali/AndroidStudioProjects/TaskManager/app/src/main/res/layout/activity_forgot_password.xml" value="0.33" />
+        <entry key="..\:/Users/YefferCali/AndroidStudioProjects/TaskManager/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/YefferCali/AndroidStudioProjects/TaskManager/app/src/main/res/layout/activity_main.xml" value="0.18840579710144928" />
+        <entry key="..\:/Users/YefferCali/AndroidStudioProjects/TaskManager/app/src/main/res/layout/activity_sign_up.xml" value="0.33" />
+        <entry key="..\:/Users/YefferCali/AndroidStudioProjects/TaskManager/app/src/main/res/layout/activity_task.xml" value="0.22" />
+        <entry key="..\:/Users/YefferCali/AndroidStudioProjects/TaskManager/app/src/main/res/layout/activity_task_card.xml" value="0.23822463768115942" />
+        <entry key="..\:/Users/YefferCali/AndroidStudioProjects/TaskManager/app/src/main/res/layout/activity_tasks.xml" value="0.24320652173913043" />
       </map>
     </option>
   </component>
@@ -12,5 +23,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.18840579710144928" />
+      </ProjectState>
+    </option>
   </component>
 </project>

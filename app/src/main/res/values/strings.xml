@@ -1,3 +1,56 @@
 <resources>
     <string name="app_name">Task Manager</string>
+
+    <dimen name="txt_size_title">34sp</dimen>
+    <dimen name="txt_size_info">16sp</dimen>
+    <dimen name="txt_size_btn">20sp</dimen>
+
+    <string name="txt_forgotPassword_title">Recuperar Contraseña</string>
+    <string name="txt_login_title">Iniciar Sesión</string>
+    <string name="txt_signUp_title">Registro</string>
+    <string name="txt_task_title">Tarea</string>
+    <string name="txt_tasks_title">Tareas</string>
+
+    <string name="txt_forgotPassword_link">¿Olvidaste la contraseña?</string>
+
+    <string name="txt_hint_name">Nombre</string>
+    <string name="txt_hint_email">Correo electrónico</string>
+    <string name="txt_hint_passw">Contraseña</string>
+    <string name="txt_hint_pass2">Confirmar Contraseña</string>
+    <string name="txt_hint_title">Titulo</string>
+    <string name="txt_hint_state">Estado</string>
+    <string name="txt_hint_descr">Descripción</string>
+
+
+    <string name="btn_login">Ingresar</string>
+    <string name="btn_signUp">Registrarse</string>
+    <string name="btn_save">Guardar</string>
+    <string name="btn_send">Enviar</string>
+    <string name="btn_update">Actualizar</string>
+    <string name="btn_createTask">+ Crear Tarea</string>
+
+    <string name="empty_field">Campo requerido</string>
+
+    <string name="state_prompt">Selecciona un estado</string>
+    <string name="state_closed">Cerrada</string>
+
+    <!-- state colors -->
+    <string name="new_color">#656565</string>
+    <string name="active_color">#0000FF</string>
+    <string name="impediment_color">#FF9800</string>
+    <string name="closed_color">#00FF00</string>
+    <string name="warning_color">#FF0000</string>
+    <string name="view_color">#E62077</string>
+    <!-- //////////// -->
+
+    <string name="user_collection">dy_user</string>
+    <string name="state_collection">st_state</string>
+    <string name="task_collection">dy_task</string>
+    <string name="error_weak_password">La contraseña debe tener al menos 6 caracteres.</string>
+    <string name="error_invalid_email">El correo electrónico tiene un formato erróneo.</string>
+    <string name="error_invalid_email_password">El correo electrónico tiene un formato erróneo ó
+        la contraseña es incorrecta.</string>
+    <string name="error_user_exists">El correo electrónico ya está siendo utilizada por otra
+        cuenta.</string>
+
 </resources>
